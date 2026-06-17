@@ -1,0 +1,88 @@
+WARNING:  Current configuration will not reload as not all conditions are met, please refer to documentation.
+INFO:     Started server process [43216]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+00:51:05  INFO      tool_call | name=query_financials | inputs={'tickers': ['PEB'], 'statement': 'balance', 'period_start': '2024-01-01', 'period_end': '2026-03-31', 'line_items': ['long_term_debt', 'cash', 'total_equity', 'total_assets', 'total_liabilities']}
+00:51:05  INFO      tool_result | name=query_financials | rows=45
+00:51:05  INFO      tool_call | name=search_documents | inputs={'query': 'debt reduction balance sheet leverage capital structure refinancing', 'tickers': ['PEB'], 'k': 5}
+00:51:07  INFO      tool_result | name=search_documents | rows=5
+00:51:11  INFO      tool_call | name=search_documents | inputs={'query': 'debt maturity schedule net debt leverage ratio covenant outstanding balance', 'tickers': ['PEB'], 'k': 5}
+00:51:11  INFO      tool_result | name=search_documents | rows=5
+00:51:11  INFO      tool_call | name=query_financials | inputs={'tickers': ['PEB'], 'statement': 'income', 'period_start': '2024-01-01', 'period_end': '2026-03-31', 'line_items': ['interest_expense', 'operating_income', 'revenues']}
+00:51:11  INFO      tool_result | name=query_financials | rows=33
+00:51:14  INFO      tool_call | name=search_documents | inputs={'query': 'debt repayment term loan payoff disposition proceeds leverage target net debt guidance 2025 2026', 'tickers': ['PEB'], 'forms': ['8-K'], 'k': 5}
+00:51:15  INFO      tool_result | name=search_documents | rows=5
+00:51:20  INFO      tool_call | name=search_documents | inputs={'query': 'net debt EBITDA leverage weighted average interest rate Q1 2026 debt summary', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-01-01', 'k': 5}
+00:51:20  INFO      tool_result | name=search_documents | rows=5
+01:36:46  INFO      tool_call | name=query_financials | inputs={'tickers': ['PEB'], 'statement': 'income', 'period_start': '2026-01-01', 'period_end': '2026-03-31'}
+01:36:46  INFO      tool_result | name=query_financials | rows=6
+01:36:46  INFO      tool_call | name=query_financials | inputs={'tickers': ['PEB'], 'statement': 'income', 'period_start': '2025-01-01', 'period_end': '2025-03-31'}
+01:36:46  INFO      tool_result | name=query_financials | rows=6
+01:36:46  INFO      tool_call | name=query_financials | inputs={'tickers': ['PEB'], 'statement': 'balance', 'period_start': '2026-01-01', 'period_end': '2026-03-31'}
+01:36:46  INFO      tool_result | name=query_financials | rows=6
+01:36:46  INFO      tool_call | name=get_kpi | inputs={'tickers': ['PEB'], 'period_start': '2025-01-01', 'period_end': '2026-03-31'}
+01:36:46  INFO      tool_result | name=get_kpi | rows=24
+01:36:46  INFO      tool_call | name=search_documents | inputs={'query': 'PEB Q1 2026 RevPAR ADR occupancy Hotel EBITDAre results', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-01-01', 'period_end': '2026-04-30'}
+01:36:47  INFO      tool_result | name=search_documents | rows=5
+01:36:47  INFO      tool_call | name=search_documents | inputs={'query': 'PEB Q1 2026 guidance outlook full year 2026', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-01-01', 'period_end': '2026-04-30'}
+01:36:47  INFO      tool_result | name=search_documents | rows=5
+01:36:56  INFO      tool_call | name=get_kpi | inputs={'tickers': ['PEB'], 'period_start': '2025-01-01', 'period_end': '2025-03-31'}
+01:36:56  INFO      tool_result | name=get_kpi | rows=6
+01:36:56  INFO      tool_call | name=search_documents | inputs={'query': 'PEB Q1 2026 ADR occupancy RevPAR same-property results by market urban resort', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-04-01', 'period_end': '2026-04-30'}
+01:36:56  INFO      tool_result | name=search_documents | rows=5
+01:36:56  INFO      tool_call | name=search_documents | inputs={'query': 'PEB 2026 full year guidance outlook RevPAR Hotel EBITDAre Adjusted FFO outlook second quarter Q2 2026', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-04-01', 'period_end': '2026-04-30'}
+01:36:57  INFO      tool_result | name=search_documents | rows=5
+01:37:03  INFO      tool_call | name=search_documents | inputs={'query': 'PEB Q1 2026 RevPAR by market San Francisco Los Angeles Seattle Portland Chicago Philadelphia', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-04-01', 'period_end': '2026-04-30'}
+01:37:03  INFO      tool_result | name=search_documents | rows=5
+01:37:03  INFO      tool_call | name=search_documents | inputs={'query': 'PEB Q1 2026 CEO management commentary exceptional performance lodging demand macro', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-04-01', 'period_end': '2026-04-30'}
+01:37:03  INFO      tool_result | name=search_documents | rows=5
+01:37:03  INFO      tool_call | name=search_documents | inputs={'query': 'PEB full year 2026 guidance Same-Property RevPAR Hotel EBITDAre Adjusted FFO per share outlook range', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-04-01', 'period_end': '2026-04-30'}
+01:37:04  INFO      tool_result | name=search_documents | rows=5
+01:37:09  INFO      tool_call | name=search_documents | inputs={'query': 'PEB 2026 full year outlook Same-Property RevPAR Hotel EBITDAre Adjusted EBITDAre full year range low high', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-04-01', 'period_end': '2026-04-30', 'k': 3}
+01:37:09  INFO      tool_result | name=search_documents | rows=3
+10:23:10  INFO      tool_call | name=get_kpi | inputs={'tickers': ['PEB'], 'kpis': ['revpar'], 'period_start': '2024-03-31', 'period_end': '2026-03-31'}
+10:23:10  INFO      tool_result | name=get_kpi | rows=9
+10:23:13  INFO      tool_call | name=search_documents | inputs={'query': 'RevPAR same-property performance drivers occupancy ADR', 'tickers': ['PEB'], 'period_start': '2024-01-01', 'period_end': '2026-03-31', 'k': 5}
+10:23:14  INFO      tool_result | name=search_documents | rows=5
+10:23:17  INFO      tool_call | name=search_documents | inputs={'query': 'Q1 2026 RevPAR growth commentary same-property performance outlook guidance', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-01-01', 'period_end': '2026-04-30', 'k': 5}
+10:23:18  INFO      tool_result | name=search_documents | rows=5
+10:23:21  INFO      tool_call | name=search_documents | inputs={'query': 'Q1 2026 RevPAR ADR occupancy same-property results management commentary', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-04-01', 'period_end': '2026-04-30', 'k': 5}
+10:23:21  INFO      tool_result | name=search_documents | rows=5
+10:23:24  INFO      tool_call | name=search_documents | inputs={'query': 'CEO management commentary same-property RevPAR results 2026 outlook full year guidance', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-04-01', 'period_end': '2026-04-30', 'k': 3}
+10:23:24  INFO      tool_result | name=search_documents | rows=3
+10:23:27  INFO      tool_call | name=search_documents | inputs={'query': '2026 full year RevPAR outlook same-property guidance range', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2026-04-01', 'period_end': '2026-04-30', 'k': 3}
+10:23:27  INFO      tool_result | name=search_documents | rows=3
+12:16:51  INFO      tool_call | name=get_kpi | inputs={'tickers': ['PEB'], 'kpis': ['occupancy', 'adr', 'revpar'], 'period_start': '2025-07-01', 'period_end': '2025-09-30'}
+12:16:51  INFO      tool_result | name=get_kpi | rows=3
+12:16:51  INFO      tool_call | name=query_financials | inputs={'tickers': ['PEB'], 'statement': 'income', 'line_items': ['revenues'], 'period_start': '2025-07-01', 'period_end': '2025-09-30'}
+12:16:51  INFO      tool_result | name=query_financials | rows=1
+12:17:03  WARNING   Validator flagged issues: ['UNSOURCED_NUMBER: PEB Q3 2025 Occupancy 81.0% not verified in trace', 'UNSOURCED_NUMBER: PEB Q3 2025 ADR $290.00 not verified in trace', 'UNSOURCED_NUMBER: PEB Q3 2025 RevPAR $233.00 not verified in trace', 'UNSOURCED_NUMBER: PEB Q3 2025 Total Revenue $398.7M not verified in trace', 'MEMORY_ASSERTION: Tool trace shows only 3 rows from get_kpi and 1 row from query_financials, but answer contains 4 specific metrics with no row-level data provided to confirm values']
+12:26:43  INFO      tool_call | name=search_documents | inputs={'query': 'hotel level RevPAR ADR occupancy by market Q3 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-07-01', 'period_end': '2025-09-30'}
+12:26:44  INFO      tool_result | name=search_documents | rows=5
+12:26:44  INFO      tool_call | name=search_documents | inputs={'query': 'same property hotel performance occupancy ADR RevPAR individual properties Q3 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-07-01', 'period_end': '2025-09-30'}
+12:26:44  INFO      tool_result | name=search_documents | rows=5
+12:26:50  INFO      tool_call | name=search_documents | inputs={'query': 'same property RevPAR ADR occupancy by market urban resort Q3 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-09-01', 'period_end': '2025-11-30'}
+12:26:50  INFO      tool_result | name=search_documents | rows=5
+12:26:50  INFO      tool_call | name=search_documents | inputs={'query': 'market RevPAR occupancy ADR Boston San Francisco San Diego Chicago Nashville Seattle Portland Q3 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-09-01', 'period_end': '2025-11-30'}
+12:26:50  INFO      tool_result | name=search_documents | rows=5
+12:26:56  INFO      tool_call | name=search_documents | inputs={'query': 'urban resort segment occupancy ADR RevPAR same-property hotel statistics three months September 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-09-01', 'period_end': '2025-11-30', 'k': 5}
+12:26:57  INFO      tool_result | name=search_documents | rows=5
+12:26:57  INFO      tool_call | name=search_documents | inputs={'query': 'RevPAR change YoY increase decrease market San Francisco Boston Los Angeles Portland Seattle Nashville San Diego 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-09-01', 'period_end': '2025-11-30', 'k': 5}
+12:26:57  INFO      tool_result | name=search_documents | rows=5
+12:27:03  INFO      tool_call | name=search_documents | inputs={'query': 'same-property hotel operating statistics urban resorts total portfolio occupancy ADR RevPAR Total RevPAR three months ended September 30 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-10-01', 'period_end': '2025-11-30', 'k': 5}
+12:27:03  INFO      tool_result | name=search_documents | rows=5
+12:27:03  INFO      tool_call | name=search_documents | inputs={'query': 'RevPAR percentage change by market Boston San Francisco Los Angeles urban resorts YoY third quarter 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-10-01', 'period_end': '2025-11-30', 'k': 5}
+12:27:04  INFO      tool_result | name=search_documents | rows=5
+12:27:27  WARNING   Validator flagged issues: ['UNSOURCED_NUMBER: Tool trace shows only search_documents calls returning 5 rows each, with no detail on which ticker, period, or metrics were returned. Answer claims specific Q3 2025 metrics (Urban Occupancy 81%, ADR $290, RevPAR $233; Resort ADR $302, RevPAR $241) and Q1-Q2 2025 progression data, but trace provides no evidence these rows contain PEB data or these specific figures.', 'MEMORY_ASSERTION: Answer cites accession 0001474098-25-000143 as source, but tool trace contains no metadata showing which documents were retrieved or their accession numbers.', 'MEMORY_ASSERTION: Answer references specific YoY comparisons (ADR down ~1.8%, RevPAR up ~0.6% in Q2) and accession 0001474098-25-000121, but tool trace does not confirm retrieval of either filing.']
+12:27:32  INFO      tool_call | name=get_kpi | inputs={'tickers': ['PEB'], 'kpis': ['occupancy', 'adr', 'revpar', 'total_revpar', 'hotel_ebitdare'], 'period_start': '2025-07-01', 'period_end': '2025-09-30'}
+12:27:32  INFO      tool_result | name=get_kpi | rows=4
+12:27:32  INFO      tool_call | name=search_documents | inputs={'query': 'same-property hotel operating statistics occupancy ADR RevPAR urban resort total three months ended September 30 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-10-01', 'period_end': '2025-11-30', 'k': 5}
+12:27:33  INFO      tool_result | name=search_documents | rows=5
+12:27:40  INFO      tool_call | name=get_kpi | inputs={'tickers': ['PEB'], 'kpis': ['occupancy', 'adr', 'revpar', 'total_revpar'], 'period_start': '2025-07-01', 'period_end': '2025-09-30', 'segment': 'urban'}
+12:27:40  INFO      tool_result | name=get_kpi | rows=0
+12:27:40  INFO      tool_call | name=get_kpi | inputs={'tickers': ['PEB'], 'kpis': ['occupancy', 'adr', 'revpar', 'total_revpar'], 'period_start': '2025-07-01', 'period_end': '2025-09-30', 'segment': 'resort'}
+12:27:40  INFO      tool_result | name=get_kpi | rows=0
+12:27:40  INFO      tool_call | name=search_documents | inputs={'query': 'market RevPAR ADR occupancy by city Boston San Francisco Los Angeles Portland Seattle Nashville San Diego third quarter September 2025', 'tickers': ['PEB'], 'forms': ['8-K'], 'period_start': '2025-10-01', 'period_end': '2025-11-30', 'k': 5}
+12:27:40  INFO      tool_result | name=search_documents | rows=5
+12:27:40  INFO      Injected synthesize-now nudge at turn 7

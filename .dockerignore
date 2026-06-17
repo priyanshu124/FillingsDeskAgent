@@ -1,0 +1,12 @@
+.venv/
+frontend/node_modules/
+frontend/dist/
+__pycache__/
+*.pyc
+.env
+.git/
+.claude/
+uvicorn.log
+uvicorn.err
+vite.log
+tests/evals/*.jsonl

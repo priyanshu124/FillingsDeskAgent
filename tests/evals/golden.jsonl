@@ -1,0 +1,10 @@
+{"question": "What was PEB's net income for Q1 2026?", "must_contain": ["19", "PEB", "10-Q", "2026"]}
+{"question": "How did PEB Q1 2026 RevPAR compare to guidance?", "must_contain": ["215", "RevPAR", "PEB", "8-K"]}
+{"question": "What is PEB's total long-term debt as of Q1 2026?", "must_contain": ["2,079", "PEB", "10-Q"]}
+{"question": "What was PEB Q1 2026 Hotel EBITDAre?", "must_contain": ["73", "EBITDAre", "PEB"]}
+{"question": "What was PEB's operating income trend from Q1 2024 through Q1 2026?", "must_contain": ["Q1 2024", "Q1 2026", "operating", "PEB"]}
+{"question": "How did PEB's interest expense change from FY2024 to FY2025?", "must_contain": ["112", "103", "interest", "PEB"]}
+{"question": "What is PEB's total assets and equity as of Q1 2026?", "must_contain": ["5,304", "2,437", "PEB", "10-Q"]}
+{"question": "What was PEB's cash flow from operations in Q1 2026?", "must_contain": ["PEB", "cash", "10-Q", "2026"]}
+{"question": "Compare PEB and HST total assets as of Q1 2026.", "must_contain": ["PEB", "HST", "13,154", "5,304"]}
+{"question": "What was PEB's revenue in Q2 2025?", "must_contain": ["407", "PEB", "Q2", "2025"]}

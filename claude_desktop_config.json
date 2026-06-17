@@ -1,0 +1,13 @@
+{
+  "_comment": "Add the 'peer-desk' block into the 'mcpServers' section of your Claude Desktop config.",
+  "_config_location": "Windows: %APPDATA%\\Claude\\claude_desktop_config.json",
+  "mcpServers": {
+    "peer-desk": {
+      "command": "d:\\projects\\peb-financial-agent\\.venv\\Scripts\\python.exe",
+      "args": [
+        "d:\\projects\\peb-financial-agent\\mcp_server.py"
+      ],
+      "env": {}
+    }
+  }
+}
