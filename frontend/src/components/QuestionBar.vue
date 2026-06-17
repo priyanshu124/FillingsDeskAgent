@@ -43,4 +43,11 @@ function submit() {
     if (input.value) { input.value.style.height = 'auto' }
   })
 }
+
+defineExpose({
+  fill(q) {
+    text.value = q
+    nextTick(() => { if (input.value) { input.value.focus(); autoResize() } })
+  }
+})
 </script>

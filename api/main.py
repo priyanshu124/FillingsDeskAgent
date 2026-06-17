@@ -1,11 +1,12 @@
 """
-Peer Desk — FastAPI wrapper around the agent loop.
+FilingsDesk — FastAPI wrapper around the agent loop.
 
 Endpoints:
   GET  /health                — liveness check
+  GET  /companies             — list loaded companies from the database
   POST /ask                   — run the agent; returns answer + tool trace + deduplicated sources
   GET  /export/financials     — full GAAP statements as CSV download
-  GET  /export/kpis           — lodging KPIs as CSV download
+  GET  /export/kpis           — KPIs as CSV download
 """
 
 from __future__ import annotations
@@ -31,6 +32,7 @@ import psycopg2
 
 from agent.loop import ask_traced
 from api.models import AskRequest, AskResponse, Source, ToolCallEntry
+from tools.list_companies import list_companies as _list_companies
 from tools.query_financials import query_financials
 from tools.get_kpi import get_kpi
 
@@ -61,6 +63,17 @@ _DB_URL = os.environ.get("DB_URL")
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.get("/companies")
+def companies_endpoint():
+    if not _DB_URL:
+        raise HTTPException(status_code=500, detail="DB_URL not configured")
+    conn = psycopg2.connect(_DB_URL)
+    try:
+        return _list_companies(conn)
+    finally:
+        conn.close()
 
 
 def _rows_to_csv(rows: list[dict], filename: str) -> StreamingResponse:
@@ -145,12 +158,12 @@ async def ask_stream(body: AskRequest):
 
     def _run():
         try:
-            answer, trace, sources = ask_traced(
+            answer, trace, sources, follow_ups = ask_traced(
                 body.question.strip(), _DB_URL,
                 history=prior,
                 progress_cb=lambda e: event_q.put(e),
             )
-            event_q.put({"type": "done", "answer": answer,
+            event_q.put({"type": "done", "answer": answer, "follow_ups": follow_ups,
                          "tool_calls": trace, "sources": sources})
         except Exception as exc:
             logging.exception("Agent stream error")
@@ -185,7 +198,7 @@ async def ask_endpoint(body: AskRequest):
 
     prior = [{"question": t.question, "answer": t.answer} for t in body.history]
     try:
-        answer, trace, sources = ask_traced(body.question.strip(), _DB_URL, history=prior)
+        answer, trace, sources, follow_ups = ask_traced(body.question.strip(), _DB_URL, history=prior)
     except Exception as exc:
         logging.exception("Agent loop error")
         raise HTTPException(status_code=500, detail=str(exc)) from exc
@@ -194,6 +207,7 @@ async def ask_endpoint(body: AskRequest):
         answer=answer,
         tool_calls=[ToolCallEntry(**t) for t in trace],
         sources=[Source(**s) for s in sources],
+        follow_ups=follow_ups,
     )
 
 

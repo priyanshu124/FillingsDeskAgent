@@ -506,6 +506,29 @@ a.source-badge:hover { background: #dbeafe; border-color: #93c5fd; }
   text-overflow: ellipsis;
 }
 
+/* ── Company chips (sidebar) ─────────────────────────────────────── */
+.company-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.company-chip {
+  background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px;
+  padding: 3px 9px; font: inherit; font-size: 12px; font-weight: 600;
+  color: #1d4ed8; cursor: pointer; transition: background 0.1s, border-color 0.1s;
+}
+.company-chip:hover { background: #dbeafe; border-color: #93c5fd; }
+
+/* ── Follow-up chips (below answer) ──────────────────────────────── */
+.followup-chips { margin: 16px 0 8px; }
+.followup-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: #9ca3af; display: block; margin-bottom: 8px;
+}
+.followup-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.followup-chip {
+  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px;
+  padding: 5px 14px; font: inherit; font-size: 13px; color: #374151;
+  cursor: pointer; transition: background 0.1s, border-color 0.1s; text-align: left;
+}
+.followup-chip:hover { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+
 /* ── Sidebar history ─────────────────────────────────────────────── */
 .sidebar-label {
   font-size: 11px;

@@ -13,6 +13,20 @@
     <div class="shell">
       <!-- Sidebar -->
       <aside class="sidebar">
+        <!-- Loaded companies -->
+        <div v-if="loadedCompanies.length">
+          <div class="sidebar-label">Loaded companies</div>
+          <div class="company-chips">
+            <button
+              v-for="c in loadedCompanies"
+              :key="c.ticker"
+              class="company-chip"
+              :title="c.name || c.ticker"
+              @click="prefillQuestion(`Tell me about ${c.ticker}'s recent financial performance`)"
+            >{{ c.ticker }}</button>
+          </div>
+        </div>
+
         <!-- Conversations -->
         <div v-if="conversations.length">
           <div class="sidebar-label">Conversations</div>
@@ -59,6 +73,7 @@
             :key="i"
             :msg="msg"
             :is-latest="i === currentConv.messages.length - 1"
+            @follow-up="handleQuestion"
           />
         </div>
 
@@ -103,14 +118,14 @@
         </div>
 
         <!-- Input -->
-        <QuestionBar :loading="loading" @submit="handleQuestion" />
+        <QuestionBar ref="questionBarRef" :loading="loading" @submit="handleQuestion" />
       </main>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, nextTick } from 'vue'
+import { ref, computed, nextTick, onMounted } from 'vue'
 import QuestionBar from './components/QuestionBar.vue'
 import MessageBubble from './components/MessageBubble.vue'
 
@@ -123,17 +138,30 @@ const DEMO_QUESTIONS = [
   { tag: 'Quick',   text: "What was Apple's net income and EPS last quarter?" },
 ]
 
-const loading = ref(false)
-const steps   = ref([])         // [{tool, inputs, status:'running'|'done', rows, elapsed_ms}]
-const conversations = ref([])   // [{messages: [{question,answer,tool_calls,sources}]}]
+const loading        = ref(false)
+const steps          = ref([])         // [{tool, inputs, status:'running'|'done', rows, elapsed_ms}]
+const conversations  = ref([])         // [{messages: [{question,answer,follow_ups,tool_calls,sources}]}]
 const currentConvIdx = ref(null)
-const mainEl  = ref(null)
+const mainEl         = ref(null)
+const questionBarRef = ref(null)
+const loadedCompanies = ref([])
 
 function scrollToBottom() {
   nextTick(() => {
     if (mainEl.value) mainEl.value.scrollTo({ top: mainEl.value.scrollHeight, behavior: 'smooth' })
   })
 }
+
+function prefillQuestion(text) {
+  questionBarRef.value?.fill(text)
+}
+
+onMounted(async () => {
+  try {
+    const res = await fetch('/companies')
+    if (res.ok) loadedCompanies.value = await res.json()
+  } catch {}
+})
 
 const currentConv = computed(() =>
   currentConvIdx.value !== null ? conversations.value[currentConvIdx.value] : null

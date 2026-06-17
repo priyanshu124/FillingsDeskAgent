@@ -32,3 +32,4 @@ class AskResponse(BaseModel):
     answer: str
     tool_calls: list[ToolCallEntry]
     sources: list[Source]
+    follow_ups: list[str] = []

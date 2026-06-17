@@ -59,3 +59,8 @@ Only call it when you are confident the ticker has never been loaded.
 
 `force_refresh=true` forces a full re-ingest regardless of current state. Use only when
 explicitly asked for a manual refresh — never set it by default.
+
+8. **Company inventory** — "what companies are loaded", "what can I ask about",
+   "what data do you have", "which tickers do you have", "what have you ingested":
+   call `list_companies`. After listing, invite the user to ask about any of them
+   or name a new ticker for on-demand onboarding via `onboard_company`.

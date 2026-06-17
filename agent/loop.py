@@ -24,6 +24,7 @@ from tools.fetch_latest_filing import fetch_latest_filing
 from tools.get_financial_trends import get_financial_trends
 from tools.get_insider_activity import get_insider_activity
 from tools.get_kpi import get_kpi
+from tools.list_companies import list_companies
 from tools.onboard_company import onboard_company
 from tools.query_financials import query_financials
 from tools.search_documents import search_documents
@@ -359,6 +360,18 @@ GET_INSIDER_ACTIVITY_TOOL: dict[str, Any] = {
     },
 }
 
+LIST_COMPANIES_TOOL: dict[str, Any] = {
+    "name": "list_companies",
+    "description": (
+        "List all companies currently loaded in the database. "
+        "Call this when the user asks which companies are available, "
+        "'what can I ask about', 'what's loaded', 'which tickers do you have', "
+        "or any similar inventory question. "
+        "Returns ticker, name, industry, and data-through dates for each company."
+    ),
+    "input_schema": {"type": "object", "properties": {}, "required": []},
+}
+
 GET_FINANCIAL_TRENDS_TOOL: dict[str, Any] = {
     "name": "get_financial_trends",
     "description": (
@@ -406,6 +419,7 @@ ALL_TOOLS = [
     COMPARE_PEERS_TOOL,
     FETCH_LATEST_FILING_TOOL,
     ONBOARD_COMPANY_TOOL,
+    LIST_COMPANIES_TOOL,
 ]
 
 
@@ -435,6 +449,8 @@ def _dispatch(name: str, inputs: dict, conn, voyage_client) -> list:
             conn, voyage_client=voyage_client, claude_client=claude_client, **inputs
         )
         return [result]
+    if name == "list_companies":
+        return list_companies(conn)
     raise ValueError(f"Unknown tool: {name!r}")
 
 
@@ -505,6 +521,40 @@ def _validate(answer: str, trace: list[dict], client) -> tuple[bool, list[str]]:
         return True, []
 
 
+def _generate_followups(question: str, answer: str, client) -> list[str]:
+    """
+    Post-validation Haiku call — returns 2-3 follow-up question strings.
+    Completely separate from the answer pipeline; non-fatal on any error.
+    """
+    try:
+        resp = client.messages.create(
+            model=VALIDATOR_MODEL,
+            max_tokens=256,
+            messages=[{"role": "user", "content":
+                f"Question asked: {question}\n\n"
+                f"Answer (first 600 chars): {answer[:600]}\n\n"
+                "Suggest 2-3 follow-up questions the user might ask next. "
+                "Only suggest questions answerable from SEC filings: "
+                "GAAP financials, trends, KPIs, management commentary, "
+                "insider transactions (Form 4), peer comparisons. "
+                "NEVER suggest: stock prices, analyst ratings, market cap, "
+                "earnings estimates, or real-time news. "
+                "Return ONLY a JSON array, no commentary: "
+                '["question 1", "question 2", "question 3"]'
+            }]
+        )
+        raw = resp.content[0].text.strip()
+        import re as _re
+        m = _re.search(r'\[.*?\]', raw, _re.DOTALL)
+        if m:
+            fups = json.loads(m.group())
+            if isinstance(fups, list):
+                return [str(q) for q in fups[:3]]
+    except Exception as exc:
+        logger.debug("follow-up generation failed (non-fatal): %s", exc)
+    return []
+
+
 def _log_query(
     conn,
     question: str,
@@ -532,7 +582,7 @@ def _run_loop(
     model: str,
     history: list[dict] | None = None,
     progress_cb=None,
-) -> tuple[str, list[dict], list[dict]]:
+) -> tuple[str, list[dict], list[dict], list[str]]:
     """
     Core agent loop. Returns (answer, trace, sources).
 
@@ -615,7 +665,8 @@ def _run_loop(
                         unique_sources.append(s)
 
                 _log_query(conn, question, answer, trace, validated, val_issues)
-                return answer, trace, unique_sources
+                follow_ups = _generate_followups(question, answer, client)
+                return answer, trace, unique_sources, follow_ups
 
             if response.stop_reason == "tool_use":
                 tool_results = []
@@ -688,7 +739,7 @@ def _run_loop(
 
 def ask(question: str, db_url: str, model: str = MODEL) -> str:
     """Returns the final text answer (CLI entry point)."""
-    answer, _, _ = _run_loop(question, db_url, model)
+    answer, *_ = _run_loop(question, db_url, model)
     return answer
 
 
@@ -698,8 +749,8 @@ def ask_traced(
     model: str = MODEL,
     history: list[dict] | None = None,
     progress_cb=None,
-) -> tuple[str, list[dict], list[dict]]:
-    """Returns (answer, trace, sources) — used by the FastAPI layer."""
+) -> tuple[str, list[dict], list[dict], list[str]]:
+    """Returns (answer, trace, sources, follow_ups) — used by the FastAPI layer."""
     return _run_loop(question, db_url, model, history=history, progress_cb=progress_cb)
 
 

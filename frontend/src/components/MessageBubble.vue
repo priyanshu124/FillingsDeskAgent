@@ -19,6 +19,17 @@
         </button>
       </div>
       <div class="answer-body" v-html="renderedAnswer" />
+      <div v-if="msg.follow_ups?.length" class="followup-chips">
+        <span class="followup-label">Continue exploring</span>
+        <div class="followup-list">
+          <button
+            v-for="q in msg.follow_ups"
+            :key="q"
+            class="followup-chip"
+            @click="$emit('follow-up', q)"
+          >{{ q }}</button>
+        </div>
+      </div>
       <SourcesBar :sources="msg.sources" />
       <TracePanel :tool-calls="msg.tool_calls" />
     </div>
@@ -35,6 +46,7 @@ const props = defineProps({
   msg:      { type: Object,  required: true },
   isLatest: { type: Boolean, default: false },
 })
+defineEmits(['follow-up'])
 
 marked.setOptions({ breaks: true })
 const renderedAnswer = computed(() => marked.parse(props.msg.answer || ''))
