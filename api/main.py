@@ -211,6 +211,10 @@ async def ask_endpoint(body: AskRequest):
     )
 
 
+# ── MCP server (streamable-HTTP transport for remote agents e.g. OmniAgent) ──
+from mcp_server import mcp as _mcp
+app.mount("/mcp", _mcp.streamable_http_app())
+
 # ── Serve Vue frontend (production Docker build) ──────────────────────────────
 _DIST = Path(__file__).parent.parent / "frontend" / "dist"
 if _DIST.exists():
